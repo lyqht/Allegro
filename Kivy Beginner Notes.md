@@ -1,4 +1,4 @@
-These notes are made for fellow beginner programmers by a layman who only has the knowledge from 10.009 The Digital World course in SUTD, which introduces students to Python. Thus, it will not be very comprehensive as it will skip over a lot on how Kivy does its modularity and abstraction to achieve its current form of code architecture. If you are interested though, headover here to read indepth.
+These notes are made for fellow beginner programmers by a layman who only has the knowledge from 10.009 The Digital World course in SUTD, which introduces students to Python. Thus, it will not be very comprehensive as it will skip over a lot on how Kivy does its modularity and abstraction to achieve its current form of code architecture.  In fact, I will be explaining things more in terms of patterns more than how it works. If you are interested though, headover to kivy.org to read their API references and documentation. 
 
 # Intro to Graphic User Interface (GUI)
 
@@ -33,9 +33,6 @@ def on_touch_down(self, touch):
         if child.dispatch('on_touch_down', touch):
             return True
 ```
-### Callbacks
-
-To use events, you have to bind callbacks to them.
 
 ### Types of Events
 
@@ -79,3 +76,97 @@ def some_func(inp):
 Clock.schedule_interval(some_func, 1/20)
 ```
 BUT preferably use trigger(), which prevents duplicate calls.
+
+# Properties 
+You can make bind a property A to another property B so that:
+
+<b> Whenever B changes, A also changes. </b>
+Or to put in more correct terms, whenever property B changes, it results in an event that could be called to property A for it respond accordingly by forming another event.
+
+An example would be whenever the textinput changes, the label text changes as well.
+
+in solely <b>.py</b>, assuming you have imported the necessary widgets already from ```kivy.uix.___```:
+```
+class ExampleApp(App):
+	def build(self):
+		b = BoxLayout()
+		l = Label(text="hello", font_size = 150)
+		t = TextInput(multiline=False,
+						font_size=150,
+						text='input text here')
+
+		t.bind(text=l.setter('text'))
+		b.add_widget(l)
+		b.add_widget(t)
+		return b
+```
+
+
+in <b>.py</b> w/ <b>.kv</b>, assuming you have given the Label an id of my_label:
+```
+# .py
+class someWidget():
+	# all the properties will be defined in the .kv file
+	pass
+	
+class ExampleApp(App):
+	def build(self):
+        	return someWidget()
+
+# .kv
+
+<someWidget>
+	TextInput:
+		id: my_textinput
+		font_size: 150
+		height: 200
+		text: 'default'
+	FloatLayout:
+		Scatter:
+			Label:
+				id: my_label
+				text: my_textinput.text
+				font_size: 150
+```
+
+in <b>.py</b>: you use the ```.bind(property_name = some_function)).```
+
+in the ver w/ <b>.kv</b>: notice how the id of textinput corresponds to the text property under the Label? 
+
+
+For cases where you want to utilize both python and kivy properties for a widget, it is convenient to define an attribute in python and the varying property that it will have.
+Thus you can say that the template for a widget written in python that is complemented with Kivy looks like this.
+```
+# in .py
+class some_widget(some_layout):
+	def change_font_size(self, *args):
+		# change ppt of the widget in anyway you like
+		id = self.ids[id_name_in_.kv]
+		label.id = id
+					
+# in .kv
+<some_widget>:
+	id = id_name_in.kv
+	ppt = someppt
+```
+or to make that template a clearer example,
+```
+# in.py
+class ScatterTextWidget(BoxLayout):
+	def change_font_size(self, *args):
+		label = self.ids['my_label']
+		label.font_size = font_size
+
+# in .kv
+<ScatterTextWidget>:
+	TextInput:
+		id: my_textinput
+		font_size: 150
+		size_hint_y: None
+		height: 200
+		text: 'default'
+		on_text: my_label.font_size =  random.randint(100, 250)
+				
+```
+
+
