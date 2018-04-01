@@ -3,28 +3,31 @@ These notes are made for fellow beginner programmers by a layman who only has th
 # Intro to Graphic User Interface (GUI)
 
 As a coder, you know that we write programmes based on conditionals and loops. Similarly, here, Kivy has a main loop that runs during its application lifetime, which only quits upon closing the app. In this main loop, user inputs, hardware sensors etc are rendered to the display. Within the main loop, there are nested loops happening as well, and as usual avoid infinite/long loops, and also sleeping. Otherwise your app can't do other stuff and might just die.
-```
-def on_touch_down(self, touch):
-    for child in self.children[:]:
-        if child.dispatch('on_touch_down', touch):
-            return True
-```
+
 # Touch
 
 Interaction with the GUI is made through Touch Instances, which are initialized by motion events such as clicking, hovering of the mouse over the screen or even swiping in the case of a touch screen. You can consider the Touch to be a sort of state machine, where it has 3 states.
 
-State 1. Down For mouse and keyboard input interfaces, it happens when you click or tap on the keyboard key.
+State 1. Down 
 
-State 2 : Move Whenever the 2D position of a touch changes *Note: You can categorize almost any interaction with the GUI by referring to its coordinates. This will become very relevant later on.
+For mouse and keyboard input interfaces, it happens when you click or tap on the keyboard key.
 
-State 3 : Up For touch screen interfaces, it happens where there is literally nothing touching the screen aka your finger is up. For mouse and keyboard input interfaces, this is when you are afk-ing / not doing shit on your com.
+State 2 : Move
+
+Whenever the 2D position of a touch changes *Note: You can categorize almost any interaction with the GUI by referring to its coordinates. This will become very relevant later on.
+
+State 3 : Up 
+
+For touch screen interfaces, it happens where there is literally nothing touching the screen aka your finger is up. For mouse and keyboard input interfaces, this is when you are afk-ing / not doing shit on your com.
 
 #### Customizing touch-able area
 For restricting the area for touch instances, use the collide_point(). True if within area. False otherwise.
 
 # Events
 
-An event will be formed based on the touch instance: on_touch_down, on_touch_move or on_touch_up. This event is first received by the root widget of the widget tree, and which will be passed down from there on, until it reaches the target widget. Widgets are objects that receive input events.
+An event will be formed based on the touch instance: on_touch_down, on_touch_move or on_touch_up. 
+
+This event is first received by the root widget of the widget tree, and which will be passed down from there on, until it reaches the target widget. Widgets are objects that receive input events.
 
 translating this to code:
 ```
@@ -60,11 +63,14 @@ event_name = Clock.schedule_interval(some_func, t / times_to_be_repeated_persec)
 ```
 You can unschedule these events as well by:
 
-event_name.cancel() OR
-Clock.unschedule() OR
-return False once a certain counter is reached e.g. stop repitition after 5 times:
+```event_name.cancel() ```
+OR
+```Clock.unschedule() ``` 
+OR
+```return False once a certain counter is reached ```
         
 ```
+# e.g. to stop repetition after 5 times
 count = 0
 def some_func(inp):
 	global count
@@ -81,6 +87,7 @@ BUT preferably use trigger(), which prevents duplicate calls.
 You can make bind a property A to another property B so that:
 
 <b> Whenever B changes, A also changes. </b>
+
 Or to put in more correct terms, whenever property B changes, it results in an event that could be called to property A for it respond accordingly by forming another event.
 
 An example would be whenever the textinput changes, the label text changes as well.
