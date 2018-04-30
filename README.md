@@ -1,8 +1,8 @@
 # 1D-DW
 This folder contains Kivy Code for our App, as well as the current desc file that you're reading now which contains the info about what this 1D-DW project is about.
 
-#### Authors: 
-Lee Gui An
+#### Group Members: 
+Lee Gui An 
 
 Tey Siew Wen
 
@@ -12,29 +12,26 @@ Merrick Tay Yu Jie
 
 Stephanie Lim Ann Tian Yuan
 
-## Background and problems to be solved
-Singapore is an increasingly air-conditioned nation - and rooms that are air-conditioned are often not ventilated often, resulting in possible degradation of air quality indoors.
-This is corroborated by the study, Asthma in the Past, Present and the Future, http://www.annals.edu.sg/pdf/46VolNo3Mar2017/V46N3p81.pdf, which has findings that show that “Eighty percent of local university students have allergen sensitization and 18% reported asthma." According to the authors, even "non-residents in Singapore develop increasing rates of sensitization and atopy year on year when they move here, suggesting that the environment in Singapore is contributing to this allergic phenomenon.” 
+# What is 1D-DW ? 
+10.009 The Digital World is an introductory course to computer science offered for freshmores studying in SUTD. In this course, we learn basic Python coding skills, data analysing, as well as Kivy. 1D is a major project of this course, where we were tasked to define a problem of concern and propose a solution that utilizes IoT technology to ameliorate the problem. Particularly, the deliverables were a beautiful, elegant working Kivy GUI and a poster explaining how the GUI works.
+
+The text below this paragraph consists of our problem statement as well as the implementation of our code and hardware. 
+
+## Background of the Problem
+
+Laundry room hazards are issues that have been easily overlooked. For example, there could be leakage from the washing machine hose, or that there could be accumulation of lint in the hose which could result in a fire. Detergents could also be forgotten to be sealed, resulting in contamination of air, which could pose a risk to the users' health, and it also affect the fabric condition of the laundry. Hence we propose a Kivy App that has a simple interface for users to access remotely and monitor the condition of their laundry room. 
 
 ## Proposed solution
-Build an IOT device to determine indoor air quality measures
-  - Device leverages sensors available for the Raspberry Pi to take measurements
-  - Computes relative quality measurement
-  - Logs to Firebase with averaged measurements over a half-hour period
-  - Provides recommendations on air quality
-  - Use of machine learning facilties such as TensorFlow /sklearn module for predictive qualitative assessments of air quality
-
-## How to use the mobile application, how the system works, UI of the mobile application, etc
-
-
-
-## Schematics or diagram of the whole system and individual components of the system
-We are using the following sensors for collecting data of air quality:
-  - MHQ-135 Air Quality Sensor
-  - DHT-22 Temp/Humidity Sensor
+Build an IOT device that computes relative air quality, ambient light, temperature and humidity measurements, into an overall relative score known as the Brisk Score:
+  - Device leverages sensors available for the Raspberry Pi to take measurements (refer to poster)
+  - The higher the Brisk Score is, the less likely the user should be drying their clothes on that day. 
+  - Logs to Firebase with averaged measurements over 5-min periods
+  - Provides feedback on state of laundry room and also whether the user should do laundry today. 
 
 ## Benefits of the proposed solutions
-- IOT-enabled device allows for remote collection of air quality data and monitoring
-- Predicts periodically recurring spikes in pollutants and prompts investigation
-- Allows users to pre-empt periods of poor air quality with corrective action
-- Relatively small footprint allows users to install them in schools/homes/offices easily to build collection of data for prediction and corrective action
+- IOT-enabled device allows for remote collection of laundry room condition data and monitoring
+- Based on the trend of the brisk score against the elapsed time since the app starts monitoring the state of the laundry room, the app prompts investigation on the user's end if there could be a firehazard due to machine hose blockage or biohazard risk due to exposed detergents. 
+
+## Rooms for Improvement
+Due to lack of time, and thus lack of training data, we were unable to implement machine learning facilties such as TensorFlow /sklearn module this time for predictive qualitative assessments of the Brisk score. However, having a machine learning algorithm would better allow users to pre-empt periods of bad laundry conditions and also allows for a larger range of more specific feedback for the user. For example, with enough data, the model may be able to suggest the exact timing that the laundry will take to dry if they choose to dry it in the current weather and laundry room condition. 
+
